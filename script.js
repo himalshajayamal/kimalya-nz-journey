@@ -1,3 +1,168 @@
+// ===== DEVICE DETECTION =====
+function getDeviceType() {
+    const detector = document.getElementById('device-detector');
+    if (!detector) return 'desktop';
+    const zIndex = parseInt(window.getComputedStyle(detector).zIndex, 10);
+    return zIndex === 2 ? 'mobile' : 'desktop';
+}
+
+function isTouchDevice() {
+    return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+}
+
+// ===== CONFETTI SYSTEM (moved before gate functions) =====
+const confettiCanvas = document.getElementById('confetti');
+const cCtx = confettiCanvas ? confettiCanvas.getContext('2d') : null;
+
+function resizeConfettiCanvas() {
+    if (!confettiCanvas) return;
+    confettiCanvas.width = window.innerWidth;
+    confettiCanvas.height = window.innerHeight;
+}
+if (confettiCanvas) resizeConfettiCanvas();
+
+let confettiPieces = [];
+const confettiColors = ['#e11d48', '#f59e0b', '#22c55e', '#3b82f6', '#a855f7', '#ec4899'];
+
+class ConfettiPiece {
+    constructor(x, y) {
+        this.x = x || Math.random() * (confettiCanvas ? confettiCanvas.width : window.innerWidth);
+        this.y = y || -20;
+        this.size = Math.random() * 10 + 5;
+        this.color = confettiColors[Math.floor(Math.random() * confettiColors.length)];
+        this.speedY = Math.random() * 3 + 2;
+        this.speedX = (Math.random() - 0.5) * 4;
+        this.rotation = Math.random() * 360;
+        this.rotationSpeed = (Math.random() - 0.5) * 10;
+        this.opacity = 1;
+    }
+
+    update() {
+        this.y += this.speedY;
+        this.x += this.speedX;
+        this.rotation += this.rotationSpeed;
+        this.speedY += 0.1;
+        this.opacity -= 0.003;
+    }
+
+    draw() {
+        if (!cCtx) return;
+        cCtx.save();
+        cCtx.translate(this.x, this.y);
+        cCtx.rotate((this.rotation * Math.PI) / 180);
+        cCtx.globalAlpha = Math.max(0, this.opacity);
+        cCtx.fillStyle = this.color;
+
+        if (Math.random() > 0.5) {
+            cCtx.fillRect(-this.size/2, -this.size/2, this.size, this.size);
+        } else {
+            cCtx.beginPath();
+            cCtx.arc(0, 0, this.size/2, 0, Math.PI * 2);
+            cCtx.fill();
+        }
+
+        cCtx.restore();
+    }
+}
+
+function animateConfetti() {
+    if (!cCtx || !confettiCanvas) return;
+    cCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+    confettiPieces = confettiPieces.filter(p => p.opacity > 0 && p.y < (confettiCanvas ? confettiCanvas.height : window.innerHeight) + 50);
+    confettiPieces.forEach(p => { p.update(); p.draw(); });
+    requestAnimationFrame(animateConfetti);
+}
+animateConfetti();
+
+function launchCelebration() {
+    const cx = confettiCanvas ? confettiCanvas.width / 2 : window.innerWidth / 2;
+    const cy = confettiCanvas ? confettiCanvas.height / 2 : window.innerHeight / 2;
+
+    for (let i = 0; i < 100; i++) {
+        const piece = new ConfettiPiece(cx, cy);
+        piece.speedY = (Math.random() - 0.5) * 20;
+        piece.speedX = (Math.random() - 0.5) * 20;
+        confettiPieces.push(piece);
+    }
+
+    let count = 0;
+    const rainInterval = setInterval(() => {
+        for (let i = 0; i < 5; i++) {
+            confettiPieces.push(new ConfettiPiece());
+        }
+        count++;
+        if (count > 40) clearInterval(rainInterval);
+    }, 50);
+
+    const btn = document.querySelector('.celebrate-btn');
+    if (btn) {
+        btn.style.transform = 'scale(0.95)';
+        setTimeout(() => btn.style.transform = '', 150);
+    }
+}
+
+// ===== PARTICLE SYSTEM =====
+const particleCanvas = document.getElementById('particles');
+const pCtx = particleCanvas ? particleCanvas.getContext('2d') : null;
+
+function resizeParticleCanvas() {
+    if (!particleCanvas) return;
+    particleCanvas.width = window.innerWidth;
+    particleCanvas.height = window.innerHeight;
+}
+resizeParticleCanvas();
+
+const particles = [];
+const particleColors = ['#fecaca', '#fde68a', '#bbf7d0', '#ddd6fe', '#fcd34d', '#fda4af'];
+
+class Particle {
+    constructor() {
+        this.reset();
+    }
+
+    reset() {
+        this.x = Math.random() * (particleCanvas ? particleCanvas.width : window.innerWidth);
+        this.y = Math.random() * (particleCanvas ? particleCanvas.height : window.innerHeight);
+        this.size = Math.random() * 5 + 2;
+        this.speedX = (Math.random() - 0.5) * 0.8;
+        this.speedY = (Math.random() - 0.5) * 0.8;
+        this.color = particleColors[Math.floor(Math.random() * particleColors.length)];
+        this.opacity = Math.random() * 0.4 + 0.1;
+        this.pulse = Math.random() * Math.PI * 2;
+    }
+
+    update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        this.pulse += 0.02;
+
+        const w = particleCanvas ? particleCanvas.width : window.innerWidth;
+        const h = particleCanvas ? particleCanvas.height : window.innerHeight;
+        if (this.x < -50 || this.x > w + 50) this.speedX *= -1;
+        if (this.y < -50 || this.y > h + 50) this.speedY *= -1;
+    }
+
+    draw() {
+        if (!pCtx) return;
+        const pulseSize = this.size + Math.sin(this.pulse) * 2;
+        pCtx.beginPath();
+        pCtx.arc(this.x, this.y, Math.max(0, pulseSize), 0, Math.PI * 2);
+        pCtx.fillStyle = this.color;
+        pCtx.globalAlpha = this.opacity;
+        pCtx.fill();
+    }
+}
+
+for (let i = 0; i < 50; i++) particles.push(new Particle());
+
+function animateParticles() {
+    if (!pCtx || !particleCanvas) return;
+    pCtx.clearRect(0, 0, particleCanvas.width, particleCanvas.height);
+    particles.forEach(p => { p.update(); p.draw(); });
+    requestAnimationFrame(animateParticles);
+}
+animateParticles();
+
 // ===== GATE LOGIC =====
 const gateResponses = {
     yes: {
@@ -22,164 +187,38 @@ function openGate(choice) {
     document.getElementById('response-emoji').textContent = response.emoji;
     document.getElementById('response-title').textContent = response.title;
     document.getElementById('response-text').textContent = response.text;
-    
-    document.getElementById('gate-response').classList.add('show');
-    
-    // Small confetti burst
+
+    // Show response overlay on TOP of gate (gate stays visible underneath)
+    const responseOverlay = document.getElementById('gate-response');
+    responseOverlay.style.display = 'flex';
+    // Force reflow for transition
+    void responseOverlay.offsetWidth;
+    responseOverlay.classList.add('show');
+
+    // Small confetti burst from center (safe now that confetti is initialized)
+    const cx = confettiCanvas ? confettiCanvas.width / 2 : window.innerWidth / 2;
+    const cy = confettiCanvas ? confettiCanvas.height / 2 : window.innerHeight / 2;
     for (let i = 0; i < 30; i++) {
-        confettiPieces.push(new ConfettiPiece(confettiCanvas.width / 2, confettiCanvas.height / 2));
+        confettiPieces.push(new ConfettiPiece(cx, cy));
     }
 }
 
 function enterSite() {
-    document.getElementById('gate').classList.add('hidden');
-    document.getElementById('gate-response').classList.remove('show');
-    document.getElementById('navbar').classList.add('visible');
-    
-    // Big confetti celebration
-    launchCelebration();
-}
+    const gate = document.getElementById('gate');
+    const responseOverlay = document.getElementById('gate-response');
 
-// ===== PARTICLE SYSTEM =====
-const particleCanvas = document.getElementById('particles');
-const pCtx = particleCanvas.getContext('2d');
+    // Hide response first
+    responseOverlay.classList.remove('show');
 
-function resizeParticleCanvas() {
-    particleCanvas.width = window.innerWidth;
-    particleCanvas.height = window.innerHeight;
-}
-resizeParticleCanvas();
+    // Then hide gate with transition
+    setTimeout(() => {
+        gate.classList.add('hidden');
+        responseOverlay.style.display = 'none';
+        document.getElementById('navbar').classList.add('visible');
 
-const particles = [];
-const particleColors = ['#fecaca', '#fde68a', '#bbf7d0', '#ddd6fe', '#fcd34d', '#fda4af'];
-
-class Particle {
-    constructor() {
-        this.reset();
-    }
-    
-    reset() {
-        this.x = Math.random() * particleCanvas.width;
-        this.y = Math.random() * particleCanvas.height;
-        this.size = Math.random() * 5 + 2;
-        this.speedX = (Math.random() - 0.5) * 0.8;
-        this.speedY = (Math.random() - 0.5) * 0.8;
-        this.color = particleColors[Math.floor(Math.random() * particleColors.length)];
-        this.opacity = Math.random() * 0.4 + 0.1;
-        this.pulse = Math.random() * Math.PI * 2;
-    }
-    
-    update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
-        this.pulse += 0.02;
-        
-        if (this.x < -50 || this.x > particleCanvas.width + 50) this.speedX *= -1;
-        if (this.y < -50 || this.y > particleCanvas.height + 50) this.speedY *= -1;
-    }
-    
-    draw() {
-        const pulseSize = this.size + Math.sin(this.pulse) * 2;
-        pCtx.beginPath();
-        pCtx.arc(this.x, this.y, Math.max(0, pulseSize), 0, Math.PI * 2);
-        pCtx.fillStyle = this.color;
-        pCtx.globalAlpha = this.opacity;
-        pCtx.fill();
-    }
-}
-
-for (let i = 0; i < 50; i++) particles.push(new Particle());
-
-function animateParticles() {
-    pCtx.clearRect(0, 0, particleCanvas.width, particleCanvas.height);
-    particles.forEach(p => { p.update(); p.draw(); });
-    requestAnimationFrame(animateParticles);
-}
-animateParticles();
-
-// ===== CONFETTI SYSTEM =====
-const confettiCanvas = document.getElementById('confetti');
-const cCtx = confettiCanvas.getContext('2d');
-
-function resizeConfettiCanvas() {
-    confettiCanvas.width = window.innerWidth;
-    confettiCanvas.height = window.innerHeight;
-}
-resizeConfettiCanvas();
-
-let confettiPieces = [];
-const confettiColors = ['#e11d48', '#f59e0b', '#22c55e', '#3b82f6', '#a855f7', '#ec4899'];
-
-class ConfettiPiece {
-    constructor(x, y) {
-        this.x = x || Math.random() * confettiCanvas.width;
-        this.y = y || -20;
-        this.size = Math.random() * 10 + 5;
-        this.color = confettiColors[Math.floor(Math.random() * confettiColors.length)];
-        this.speedY = Math.random() * 3 + 2;
-        this.speedX = (Math.random() - 0.5) * 4;
-        this.rotation = Math.random() * 360;
-        this.rotationSpeed = (Math.random() - 0.5) * 10;
-        this.opacity = 1;
-    }
-    
-    update() {
-        this.y += this.speedY;
-        this.x += this.speedX;
-        this.rotation += this.rotationSpeed;
-        this.speedY += 0.1;
-        this.opacity -= 0.003;
-    }
-    
-    draw() {
-        cCtx.save();
-        cCtx.translate(this.x, this.y);
-        cCtx.rotate((this.rotation * Math.PI) / 180);
-        cCtx.globalAlpha = Math.max(0, this.opacity);
-        cCtx.fillStyle = this.color;
-        
-        if (Math.random() > 0.5) {
-            cCtx.fillRect(-this.size/2, -this.size/2, this.size, this.size);
-        } else {
-            cCtx.beginPath();
-            cCtx.arc(0, 0, this.size/2, 0, Math.PI * 2);
-            cCtx.fill();
-        }
-        
-        cCtx.restore();
-    }
-}
-
-function animateConfetti() {
-    cCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
-    confettiPieces = confettiPieces.filter(p => p.opacity > 0 && p.y < confettiCanvas.height + 50);
-    confettiPieces.forEach(p => { p.update(); p.draw(); });
-    requestAnimationFrame(animateConfetti);
-}
-animateConfetti();
-
-function launchCelebration() {
-    for (let i = 0; i < 100; i++) {
-        const piece = new ConfettiPiece(confettiCanvas.width / 2, confettiCanvas.height / 2);
-        piece.speedY = (Math.random() - 0.5) * 20;
-        piece.speedX = (Math.random() - 0.5) * 20;
-        confettiPieces.push(piece);
-    }
-    
-    let count = 0;
-    const rainInterval = setInterval(() => {
-        for (let i = 0; i < 5; i++) {
-            confettiPieces.push(new ConfettiPiece());
-        }
-        count++;
-        if (count > 40) clearInterval(rainInterval);
-    }, 50);
-    
-    const btn = document.querySelector('.celebrate-btn');
-    if (btn) {
-        btn.style.transform = 'scale(0.95)';
-        setTimeout(() => btn.style.transform = '', 150);
-    }
+        // Big confetti celebration
+        launchCelebration();
+    }, 300);
 }
 
 // ===== 3D CAROUSEL =====
@@ -240,7 +279,7 @@ function flipCard(card) {
 window.addEventListener('scroll', () => {
     const navbar = document.querySelector('.navbar');
     const currentScroll = window.pageYOffset;
-    
+
     if (currentScroll > 100) {
         navbar.style.boxShadow = '0 4px 20px rgba(0,0,0,0.1)';
     } else {
@@ -256,8 +295,8 @@ window.addEventListener('resize', () => {
 
 // ===== MUSIC NOTES ON CLICK =====
 document.addEventListener('click', (e) => {
-    if (e.target.closest('button') || e.target.closest('.msg-card') || e.target.closest('.carousel-card') || e.target.closest('.gate-btn')) return;
-    
+    if (e.target.closest('button') || e.target.closest('.msg-card') || e.target.closest('.carousel-card') || e.target.closest('.gate-btn') || e.target.closest('.video-play-btn') || e.target.closest('.video-wrapper')) return;
+
     const notes = ['♪', '♫', '♬', '♩', '✨', '⭐'];
     const note = document.createElement('div');
     note.style.cssText = `
@@ -272,7 +311,7 @@ document.addEventListener('click', (e) => {
     `;
     note.textContent = notes[Math.floor(Math.random() * notes.length)];
     document.body.appendChild(note);
-    
+
     setTimeout(() => note.remove(), 3000);
 });
 
@@ -304,3 +343,85 @@ window.addEventListener('scroll', () => {
         hero.style.transform = `translateY(${scrolled * 0.3}px)`;
     }
 });
+
+// ===== FAMILY VIDEO CONTROLS =====
+let familyVideo = null;
+let videoOverlay = null;
+let isVideoPlaying = false;
+
+function initFamilyVideo() {
+    familyVideo = document.getElementById('family-video');
+    videoOverlay = document.querySelector('.video-overlay');
+
+    if (!familyVideo) return;
+
+    // Ensure muted autoplay works
+    familyVideo.muted = true;
+    familyVideo.play().catch(err => {
+        console.log('Autoplay prevented, waiting for interaction');
+    });
+
+    // On mobile, show overlay until user interacts
+    if (isTouchDevice()) {
+        familyVideo.addEventListener('play', () => {
+            isVideoPlaying = true;
+        });
+    } else {
+        // Desktop: hide overlay once playing
+        familyVideo.addEventListener('play', () => {
+            if (videoOverlay) videoOverlay.classList.add('hidden');
+            isVideoPlaying = true;
+        });
+    }
+
+    familyVideo.addEventListener('pause', () => {
+        isVideoPlaying = false;
+        if (videoOverlay) videoOverlay.classList.remove('hidden');
+    });
+
+    familyVideo.addEventListener('ended', () => {
+        isVideoPlaying = false;
+        if (videoOverlay) videoOverlay.classList.remove('hidden');
+    });
+}
+
+function toggleFamilyVideo() {
+    if (!familyVideo) {
+        familyVideo = document.getElementById('family-video');
+        videoOverlay = document.querySelector('.video-overlay');
+    }
+
+    if (!familyVideo) return;
+
+    if (familyVideo.paused) {
+        familyVideo.muted = false;
+        familyVideo.play().then(() => {
+            if (videoOverlay) videoOverlay.classList.add('hidden');
+            isVideoPlaying = true;
+        }).catch(err => {
+            console.log('Playback failed:', err);
+            // Fallback: try muted
+            familyVideo.muted = true;
+            familyVideo.play();
+        });
+    } else {
+        familyVideo.pause();
+        if (videoOverlay) videoOverlay.classList.remove('hidden');
+        isVideoPlaying = false;
+    }
+
+    updatePlayButton();
+}
+
+function updatePlayButton() {
+    const btn = document.getElementById('play-icon');
+    if (!btn || !familyVideo) return;
+    btn.textContent = familyVideo.paused ? '▶' : '⏸';
+}
+
+// Initialize video when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initFamilyVideo);
+} else {
+    initFamilyVideo();
+}

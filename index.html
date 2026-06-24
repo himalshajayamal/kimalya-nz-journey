@@ -8,8 +8,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+<base target="_blank">
 </head>
 <body>
+
+    <!-- DEVICE DETECTOR (for JS to read media query state) -->
+    <div id="device-detector" class="device-detector"></div>
 
     <!-- GATE OVERLAY -->
     <div id="gate" class="gate-overlay">
@@ -64,7 +68,7 @@
         <div class="float-shape"></div>
         <div class="float-shape"></div>
         <div class="float-shape"></div>
-        
+
         <div class="hero-content">
             <div class="hero-badge">
                 <span class="pulse-dot"></span>
@@ -93,7 +97,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="scroll-hint" onclick="document.querySelector('.timeline-section').scrollIntoView({behavior:'smooth'})">
             <svg width="30" height="40" viewBox="0 0 30 40">
                 <rect x="2" y="2" width="26" height="36" rx="13" stroke="currentColor" stroke-width="2" fill="none"/>
@@ -162,14 +166,14 @@
         </div>
     </section>
 
-    <!-- 3D Photo Carousel (from birthday design) -->
+    <!-- 3D Photo Carousel -->
     <section class="memories-section">
         <div class="section-header reveal">
             <span class="section-eyebrow">Moments & Memories</span>
             <h2>The Face Behind the Dream</h2>
             <p>Click the photos to rotate through memories</p>
         </div>
-        
+
         <div class="carousel-container reveal">
             <div class="carousel" id="carousel">
                 <div class="carousel-card" onclick="rotateCarousel(0)">
@@ -194,7 +198,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="carousel-nav reveal">
             <button onclick="prevSlide()">◀</button>
             <button onclick="nextSlide()">▶</button>
@@ -217,7 +221,31 @@
                         <span>💙 The Danansooriya Family</span>
                     </div>
                 </div>
-                
+
+                <!-- VIDEO SECTION -->
+                <div class="family-video-section reveal">
+                    <div class="video-topic">
+                        <span class="topic-line"></span>
+                        <p class="topic-text">"When I asked about her family photo, she said this..." 😂😂</p>
+                        <span class="topic-line"></span>
+                    </div>
+                    <div class="video-wrapper video-vertical">
+                        <video id="family-video" autoplay muted loop playsinline webkit-playsinline preload="metadata" poster="photos/family.jpg">
+                            <source src="videos/family-intro.mp4" type="video/mp4">
+                            <source src="videos/family-intro.webm" type="video/webm">
+                            <p class="video-fallback">Your browser does not support the video tag. 
+                            <a href="videos/family-intro.mp4" download>Download the video</a> to watch.</p>
+                        </video>
+                        <div class="video-overlay">
+                            <button class="video-play-btn" id="video-play-btn" onclick="toggleFamilyVideo()">
+                                <span id="play-icon">▶</span>
+                            </button>
+                            <p class="video-hint">Tap to unmute & watch</p>
+                        </div>
+                    </div>
+                    <p class="video-caption">A glimpse into the Danansooriya family — where love, support, and dreams take flight together.</p>
+                </div>
+
                 <div class="family-members">
                     <div class="member-card">
                         <div class="member-emoji">👨‍💼</div>
