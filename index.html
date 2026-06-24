@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kimalya's New Zealand Journey ✈️ | Visa Approved</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- GATE OVERLAY -->
+    <div id="gate" class="gate-overlay">
+        <div class="gate-content">
+            <div class="gate-plane">✈️</div>
+            <h2 class="gate-title">Ready for the Future?</h2>
+            <p class="gate-subtitle">Kimalya Malnethmi Danansooriya<br>Your journey to New Zealand begins now.</p>
+            <div class="gate-buttons">
+                <button class="gate-btn yes" onclick="openGate('yes')">
+                    <span>Yes, I'm Ready! 🚀</span>
+                </button>
+                <button class="gate-btn no" onclick="openGate('no')">
+                    <span>No, I'm Scared 😰</span>
+                </button>
+                <button class="gate-btn maybe" onclick="openGate('maybe')">
+                    <span>Maybe... 🤔</span>
+                </button>
+            </div>
+            <p class="gate-hint">Choose wisely... 😉</p>
+        </div>
+    </div>
+
+    <!-- GATE RESPONSE OVERLAY -->
+    <div id="gate-response" class="gate-response">
+        <div class="response-content">
+            <div class="response-emoji" id="response-emoji">🎉</div>
+            <h2 id="response-title">The Future is Beginning Now!</h2>
+            <p id="response-text">Let's go!</p>
+            <button class="response-btn" onclick="enterSite()">Enter the Journey ➜</button>
+        </div>
+    </div>
+
+    <!-- Floating Particles -->
+    <canvas id="particles"></canvas>
+    <canvas id="confetti"></canvas>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-brand">✈️ Kimalya's Journey</div>
+        <div class="nav-links">
+            <a href="#hero">Home</a>
+            <a href="#story">Her Story</a>
+            <a href="#family">Family</a>
+            <a href="#dreams">Dreams</a>
+            <a href="#message">Message</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+        <div class="float-shape"></div>
+        <div class="float-shape"></div>
+        <div class="float-shape"></div>
+        <div class="float-shape"></div>
+        
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span class="pulse-dot"></span>
+                Visa Approved • July 2026
+            </div>
+            <h1 class="hero-title">
+                <span class="line1">The Adventure</span>
+                <span class="line2">Begins</span>
+            </h1>
+            <p class="hero-subtitle">
+                From the shores of Sri Lanka to the landscapes of Aotearoa — <br>
+                <strong>Kimalya Malnethmi Danansooriya</strong> is ready to chase her dreams.
+            </p>
+            <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-num">🇳🇿</span>
+                    <span class="stat-label">New Zealand</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-num">🎓</span>
+                    <span class="stat-label">University of Waikato</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-num">💰</span>
+                    <span class="stat-label">$15K Scholarship</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="scroll-hint" onclick="document.querySelector('.timeline-section').scrollIntoView({behavior:'smooth'})">
+            <svg width="30" height="40" viewBox="0 0 30 40">
+                <rect x="2" y="2" width="26" height="36" rx="13" stroke="currentColor" stroke-width="2" fill="none"/>
+                <circle cx="15" cy="12" r="3" fill="currentColor">
+                    <animate attributeName="cy" values="12;24;12" dur="2s" repeatCount="indefinite"/>
+                </circle>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Journey Timeline -->
+    <section id="story" class="timeline-section">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-eyebrow">The Path So Far</span>
+                <h2>Every Step Led Here</h2>
+                <p>From setbacks to comebacks — this is Kimalya's journey to New Zealand</p>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-date">2024 • September</span>
+                        <h3>Foundation Complete</h3>
+                        <p>Finished Foundation of Health Science at Edith Cowan College — mastering Human Biology, Chemistry, Foundation Science, Mathematics, and Communication Skills.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-date">2025 • April</span>
+                        <h3>English Proficiency</h3>
+                        <p>Achieved PTE Academic score of 47 through the Skills English programme — ready for academic life in New Zealand.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-date">2026 • January</span>
+                        <h3>Australian Visa Refusal</h3>
+                        <p>A setback that became a setup for something greater. Kimalya reviewed, reflected, and chose a better path forward.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot highlight"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-date">2026 • March</span>
+                        <h3>Offer & Scholarship</h3>
+                        <p>Received unconditional offer from University of Waikato + <strong>Vice Chancellor's International Excellence Scholarship of NZD $15,000</strong>.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot final"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-date">2026 • July 6</span>
+                        <h3>Orientation Day</h3>
+                        <p>The journey officially begins. Bachelor of Health (Biomedical Sciences) — 360 credits, 3 years, infinite possibilities.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3D Photo Carousel (from birthday design) -->
+    <section class="memories-section">
+        <div class="section-header reveal">
+            <span class="section-eyebrow">Moments & Memories</span>
+            <h2>The Face Behind the Dream</h2>
+            <p>Click the photos to rotate through memories</p>
+        </div>
+        
+        <div class="carousel-container reveal">
+            <div class="carousel" id="carousel">
+                <div class="carousel-card" onclick="rotateCarousel(0)">
+                    <img src="photos/kimalya-1.jpg" alt="Kimalya" onerror="this.src='https://images.unsplash.com/photo-1523050854058-8df90110c8f5?w=400&h=500&fit=crop'">
+                    <div class="caption">Ready for New Zealand 🌏</div>
+                </div>
+                <div class="carousel-card" onclick="rotateCarousel(1)">
+                    <img src="photos/kimalya-2.jpg" alt="Kimalya" onerror="this.src='https://images.unsplash.com/photo-1544717305-2782549b5136?w=400&h=500&fit=crop'">
+                    <div class="caption">Future Scientist 🔬</div>
+                </div>
+                <div class="carousel-card" onclick="rotateCarousel(2)">
+                    <img src="photos/kimalya-3.jpg" alt="Kimalya" onerror="this.src='https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=400&h=500&fit=crop'">
+                    <div class="caption">Dreamer ✨</div>
+                </div>
+                <div class="carousel-card" onclick="rotateCarousel(3)">
+                    <img src="photos/kimalya-4.jpg" alt="Kimalya" onerror="this.src='https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=400&h=500&fit=crop'">
+                    <div class="caption">Sri Lanka to New Zealand 🇱🇰 ✈️ 🇳🇿</div>
+                </div>
+                <div class="carousel-card" onclick="rotateCarousel(4)">
+                    <img src="photos/kimalya-5.jpg" alt="Kimalya" onerror="this.src='https://images.unsplash.com/photo-1491438590914-bc09fcaaf77a?w=400&h=500&fit=crop'">
+                    <div class="caption">Hamilton Bound 🎯</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="carousel-nav reveal">
+            <button onclick="prevSlide()">◀</button>
+            <button onclick="nextSlide()">▶</button>
+        </div>
+    </section>
+
+    <!-- Family Section -->
+    <section id="family" class="family-section">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-eyebrow">Her Foundation</span>
+                <h2>The Family Behind the Dream</h2>
+                <p>Every great journey starts with people who believe in you</p>
+            </div>
+
+            <div class="family-showcase reveal">
+                <div class="family-photo-main">
+                    <img src="photos/family.jpg" alt="Kimalya's Family" onerror="this.src='https://images.unsplash.com/photo-1511895426328-dc8714191300?w=800&h=500&fit=crop'">
+                    <div class="family-photo-caption">
+                        <span>💙 The Danansooriya Family</span>
+                    </div>
+                </div>
+                
+                <div class="family-members">
+                    <div class="member-card">
+                        <div class="member-emoji">👨‍💼</div>
+                        <h4>Father</h4>
+                        <p>Labour Officer at the Department of Labour</p>
+                        <span class="member-tag">Primary Sponsor</span>
+                    </div>
+                    <div class="member-card">
+                        <div class="member-emoji">👩‍🍼</div>
+                        <h4>Mother</h4>
+                        <p>Housewife & supportive pillar</p>
+                        <span class="member-tag">Financial Support</span>
+                    </div>
+                    <div class="member-card">
+                        <div class="member-emoji">👦</div>
+                        <h4>Younger Brother</h4>
+                        <p>The little cheerleader at home</p>
+                        <span class="member-tag">Moral Support</span>
+                    </div>
+                    <div class="member-card highlight">
+                        <div class="member-emoji">👩‍🎓</div>
+                        <h4>Kimalya</h4>
+                        <p>The dreamer, the doer, the future biomedical scientist</p>
+                        <span class="member-tag">Star of the Show</span>
+                    </div>
+                </div>
+
+                <div class="family-quote reveal">
+                    <p>"My family strongly values education and fully supports my higher studies in New Zealand."</p>
+                    <cite>— Kimalya Malnethmi Danansooriya</cite>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dreams & Goals -->
+    <section id="dreams" class="dreams-section">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-eyebrow">What Awaits</span>
+                <h2>Her Dreams, Her Future</h2>
+            </div>
+
+            <div class="dreams-grid">
+                <div class="dream-card reveal">
+                    <div class="dream-icon">🧬</div>
+                    <h3>Biomedical Sciences</h3>
+                    <p>Human Anatomy & Physiology, Molecular & Cellular Biology, Genetics, Microbiology, Biochemistry, Pharmacology, Epidemiology, Biostatistics, and Pathophysiology.</p>
+                </div>
+
+                <div class="dream-card reveal">
+                    <div class="dream-icon">🔬</div>
+                    <h3>Research & Discovery</h3>
+                    <p>Practical laboratory exposure, modern facilities, and a research culture that turns curiosity into breakthroughs.</p>
+                </div>
+
+                <div class="dream-card reveal">
+                    <div class="dream-icon">🏠</div>
+                    <h3>Home to Sri Lanka</h3>
+                    <p>After graduation, she returns to contribute to Sri Lanka's healthcare sector — bringing world-class knowledge back home.</p>
+                </div>
+
+                <div class="dream-card reveal">
+                    <div class="dream-icon">💊</div>
+                    <h3>Career Path</h3>
+                    <p>Laboratory services, healthcare organizations, research institutions, pharmaceutical companies, and biotechnology sectors.</p>
+                </div>
+            </div>
+
+            <div class="quote-block reveal">
+                <svg class="quote-mark" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+                <blockquote>
+                    My primary goal is to complete my degree successfully. After my studies, I intend to return to Sri Lanka and build my career in the healthcare and biomedical science sector.
+                </blockquote>
+                <cite>— Kimalya Malnethmi Danansooriya</cite>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Message Section -->
+    <section id="message" class="message-section">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-eyebrow">A Message For You</span>
+                <h2>Click to Reveal</h2>
+            </div>
+
+            <div class="message-cards reveal">
+                <div class="msg-card" onclick="flipCard(this)">
+                    <div class="msg-card-inner">
+                        <div class="msg-front">
+                            <span class="msg-emoji">✈️</span>
+                            <h3>Safe Travels</h3>
+                            <p>Click to read</p>
+                        </div>
+                        <div class="msg-back">
+                            <p>May every flight be smooth, every connection on time, and your first step on New Zealand soil fill you with excitement for the incredible journey ahead.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="msg-card" onclick="flipCard(this)">
+                    <div class="msg-card-inner">
+                        <div class="msg-front">
+                            <span class="msg-emoji">🎓</span>
+                            <h3>Academic Success</h3>
+                            <p>Click to read</p>
+                        </div>
+                        <div class="msg-back">
+                            <p>May your mind stay sharp, your curiosity never fade, and every late night of study lead to discoveries that change lives. You've got this, Kimalya!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="msg-card" onclick="flipCard(this)">
+                    <div class="msg-card-inner">
+                        <div class="msg-front">
+                            <span class="msg-emoji">💪</span>
+                            <h3>Inner Strength</h3>
+                            <p>Click to read</p>
+                        </div>
+                        <div class="msg-back">
+                            <p>Homesickness will come. Challenges will too. But remember — you survived a visa refusal, rebuilt your plan, and earned a $15,000 scholarship. You are unstoppable.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="msg-card" onclick="flipCard(this)">
+                    <div class="msg-card-inner">
+                        <div class="msg-front">
+                            <span class="msg-emoji">🌟</span>
+                            <h3>Bright Future</h3>
+                            <p>Click to read</p>
+                        </div>
+                        <div class="msg-back">
+                            <p>Three years from now, you'll walk across that stage with a degree, memories, and the power to heal. Sri Lanka is waiting for you to come home and make a difference.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Final Letter -->
+            <div class="final-letter reveal">
+                <div class="letter-paper">
+                    <div class="letter-header">
+                        <span class="letter-stamp">✈️</span>
+                        <span class="letter-date">June 2026</span>
+                    </div>
+                    <h3>To Kimalya,</h3>
+                    <p>
+                        When I first heard about your visa approval, I felt genuine happiness. Not just because you're going to New Zealand — but because I know <strong>how hard you worked for this</strong>.
+                    </p>
+                    <p>
+                        From St. Paul's Girls' School to Edith Cowan College, from PTE preparation to that scholarship interview — every step was earned. Even when Australia didn't work out, you didn't give up. You found a better path. That's who you are.
+                    </p>
+                    <p>
+                        Hamilton is lucky to have you. The University of Waikato doesn't know yet, but they're about to gain one of their most determined students. Those 360 credits? You'll own them.
+                    </p>
+                    <p>
+                        Study hard, make friends, explore those beautiful New Zealand landscapes, call your family often, and never forget where you came from. Sri Lanka is proud of you. I am proud of you.
+                    </p>
+                    <p class="letter-closing">
+                        Fly high, dream big, and come back ready to heal the world.
+                    </p>
+                    <div class="letter-signature">
+                        With admiration and belief in you,<br>
+                        <strong>Your Friend</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="celebrate-area reveal">
+                <button class="celebrate-btn" onclick="launchCelebration()">
+                    <span class="btn-text">🎉 Celebrate Kimalya's Journey!</span>
+                    <span class="btn-shine"></span>
+                </button>
+                <p class="celebrate-hint">Click for a surprise</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-plane">✈️</div>
+        <h3>Kimalya Malnethmi Danansooriya</h3>
+        <p>Bachelor of Health (Biomedical Sciences)</p>
+        <p>University of Waikato • Hamilton, New Zealand • July 2026</p>
+        <div class="footer-flags">🇱🇰 → 🇳🇿</div>
+        <p class="footer-made">Made with pride for a friend chasing her dreams</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
